@@ -14,10 +14,12 @@ CONFIG   -= x86_64
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    localapi.cpp
+    localapi.cpp \
+    journalmodel.cpp
 
 HEADERS  += mainwindow.h \
-    localapi.h
+    localapi.h \
+    journalmodel.h
 
 RESOURCES += README.md \
            LICENSE.md

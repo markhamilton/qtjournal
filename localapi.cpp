@@ -20,7 +20,7 @@ bool LocalApi::createConnection()
     {
         QMessageBox::critical(0, "Cannot open database",
             "Unable to establish a database connection.\n"
-            "This example needs SQLite support. Please read "
+            "This program needs SQLite support. Please read "
             "the Qt SQL driver documentation for information how "
             "to build it.\n\n"
             "Click Cancel to exit.", QMessageBox::Cancel);
@@ -28,14 +28,10 @@ bool LocalApi::createConnection()
     }
 
     setupTables();
+    demoData();
 
-    QSqlQuery q(db);
-    q.exec("show tables");
-    while(q.next())
-    {
-        qDebug() << q.value(0);
-    }
-
+    qDebug() << "Showing tables...";
+    qDebug() << db.tables();
 
     return true;
 }
@@ -49,9 +45,9 @@ bool LocalApi::setupTables()
     // TODO: constraints for meta
     try
     {
-        query.exec("create table journal (id int primary key, title text)");
-        query.exec("create table entry (id int primary key, content text, datetime)");
-        query.exec("create table entry_meta (k text primary key, v text)");
+        query.exec("create table if not exists journal (id int primary key, title text)");
+        query.exec("create table if not exists entry (id int primary key, content text, datetime)");
+        query.exec("create table if not exists entry_meta (k text primary key, v text)");
     }
     catch(...)
     {
@@ -63,7 +59,10 @@ bool LocalApi::setupTables()
 
 bool LocalApi::demoData()
 {
-    QSqlQuery query;
+    QSqlQuery query(db);
+
+    for(int i = 0; i < 100; i++)
+        query.exec("insert into journal (id, title) values (" + QString::number(i) + ", \"Test Journal " + QString::number(i) + "\")");
 
     return true;
 }
