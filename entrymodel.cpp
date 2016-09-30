@@ -2,8 +2,10 @@
 
 #include <QSqlQuery>
 
-EntryModel::EntryModel()
+
+EntryModel::EntryModel(LocalApi *api)
 {
+    l_api = api;
 }
 
 int EntryModel::rowCount(const QModelIndex &parent) const
@@ -18,6 +20,12 @@ int EntryModel::rowCount(const QModelIndex &parent) const
     return 0;
 }
 
+int EntryModel::columnCount(const QModelIndex &parent) const
+{
+    Q_UNUSED(parent);
+    return 2;
+}
+
 QVariant EntryModel::data(const QModelIndex &index, int role) const
 {
     int row = index.row();
@@ -26,11 +34,8 @@ QVariant EntryModel::data(const QModelIndex &index, int role) const
     if (role == Qt::DisplayRole)
     {
         QSqlQuery q;
-        q.exec("select * from entry limit " + QString::number(row) + ",1");
-        if(q.next())
-        {
-            return QString(q.value(1).toString());
-        }
+        q.exec("select id,trim(replace(content, ltrim(content, replace(content, '\n', '' ) ), '')),published from entry limit " + QString::number(row) + ",1");
+        if(q.next()) return QString(q.value(col).toString());
     }
     return QVariant();
 }

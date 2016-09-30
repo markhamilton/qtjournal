@@ -4,6 +4,7 @@
 
 #include <QSqlQueryModel>
 #include "journalmodel.h"
+#include "entrymodel.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -15,6 +16,10 @@ MainWindow::MainWindow(QWidget *parent) :
     JournalModel *jm = new JournalModel(&l_api);
     ui->lstJournals->setModel(jm);
     ui->lstJournals->setModelColumn(1);
+
+    EntryModel *em = new EntryModel(&l_api);
+    ui->lstEntries->setModel(em);
+    ui->lstEntries->setModelColumn(1);
 
 //    ui->lstEntries->setModel(em);
 }

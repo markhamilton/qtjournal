@@ -46,7 +46,7 @@ bool LocalApi::setupTables()
     try
     {
         query.exec("create table if not exists journal (id int primary key, title text, color text)");
-        query.exec("create table if not exists entry (id int primary key, content text, datetime)");
+        query.exec("create table if not exists entry (id int primary key, content text, published datetime)");
         query.exec("create table if not exists entry_meta (k text primary key, v text)");
     }
     catch(...)
@@ -61,8 +61,13 @@ bool LocalApi::demoData()
 {
     QSqlQuery query(db);
 
-    for(int i = 1; i < 1000; ++i)
+    for(int i = 1; i < 3; ++i) {
         query.exec("insert into journal (id, title) values (" + QString::number(i) + ", \"Test Journal " + QString::number(i) + "\")");
+    }
+
+    for(int i = 1; i < 1000; ++i) {
+        query.exec("insert into entry (id,content) VALUES (" + QString::number(i) + ", \"Test Entry " + QString::number(i) + "\n\nTest content\")");
+    }
 
     return true;
 }
