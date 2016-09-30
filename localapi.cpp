@@ -27,11 +27,10 @@ bool LocalApi::createConnection()
         return false;
     }
 
-    setupTables();
+    if(! setupTables()) return false;
     demoData();
 
-    qDebug() << "Showing tables...";
-    qDebug() << db.tables();
+    qDebug() << "Showing tables..." << db.tables();
 
     return true;
 }
@@ -40,14 +39,17 @@ bool LocalApi::setupTables()
 {
     QSqlQuery query(db);
 
-    qDebug() << "Creating tables in memory";
+    qDebug() << "Creating tables in memory...";
 
-    // TODO: constraints for meta
     try
     {
+        // TODO: constraints for meta
         query.exec("create table if not exists journal (id int primary key, title text, color text)");
-        query.exec("create table if not exists entry (id int primary key, content text, published datetime)");
+        query.exec("create table if not exists entry (id int primary key, content text, published datetime key)");
         query.exec("create table if not exists entry_meta (k text primary key, v text)");
+        query.exec("create table if not exists tag(id int primary key, title text key, color text)");
+        query.exec("create table if not exists entry_tag (tag_id int primary key, entry_id int key)");
+        query.exec("create table if not exists photo (id int primary key, title text, data blob)");
     }
     catch(...)
     {
