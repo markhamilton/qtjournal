@@ -45,7 +45,7 @@ bool LocalApi::setupTables()
     {
         // TODO: constraints for meta
         query.exec("create table if not exists journal (id int primary key, title text, color text)");
-        query.exec("create table if not exists entry (id int primary key, content text, published datetime key)");
+        query.exec("create table if not exists entry (id int primary key, journal_id key, content text, published datetime key)");
         query.exec("create table if not exists entry_meta (k text primary key, v text)");
         query.exec("create table if not exists tag(id int primary key, title text key, color text)");
         query.exec("create table if not exists entry_tag (tag_id int primary key, entry_id int key)");
@@ -68,7 +68,7 @@ bool LocalApi::demoData()
     }
 
     for(int i = 1; i < 1000; ++i) {
-        query.exec("insert into entry (id,content) VALUES (" + QString::number(i) + ", \"Test Entry " + QString::number(i) + "\n\nTest content\")");
+        query.exec("insert into entry (id, journal_id,content) VALUES (" + QString::number(i) + ", 1, \"Test Entry " + QString::number(i) + "\n\nTest content\")");
     }
 
     return true;
