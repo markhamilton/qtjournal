@@ -45,7 +45,7 @@ bool LocalApi::setupTables()
     // TODO: constraints for meta
     try
     {
-        query.exec("create table if not exists journal (id int primary key, title text)");
+        query.exec("create table if not exists journal (id int primary key, title text, color text)");
         query.exec("create table if not exists entry (id int primary key, content text, datetime)");
         query.exec("create table if not exists entry_meta (k text primary key, v text)");
     }
@@ -61,7 +61,7 @@ bool LocalApi::demoData()
 {
     QSqlQuery query(db);
 
-    for(int i = 0; i < 100; i++)
+    for(int i = 1; i < 1000; ++i)
         query.exec("insert into journal (id, title) values (" + QString::number(i) + ", \"Test Journal " + QString::number(i) + "\")");
 
     return true;

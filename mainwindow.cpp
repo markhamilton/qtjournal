@@ -14,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     JournalModel *jm = new JournalModel(&l_api);
     ui->lstJournals->setModel(jm);
+    ui->lstJournals->setModelColumn(1);
+
 //    ui->lstEntries->setModel(em);
 }
 
