@@ -51,9 +51,8 @@ void MainWindow::setupModels()
 
 void MainWindow::journalSelectionChanged(const QItemSelection& selection)
 {
-    if( selection.indexes().isEmpty() ) {
-        qDebug() << "Journal: Cleared selection";
-        // Set default selection
+    if(ui->lstJournals->selectionModel()->selectedRows().count() == 0) {
+        // Set first journal -- can't deselect all journals
         ui->lstJournals->setCurrentIndex(ui->lstJournals->model()->index(1,0));
     } else {
         qDebug() << "Journal: Selection changed";
@@ -64,12 +63,26 @@ void MainWindow::journalSelectionChanged(const QItemSelection& selection)
 
 void MainWindow::entrySelectionChanged(const QItemSelection& selection)
 {
-    if( selection.indexes().isEmpty() ) {
-        qDebug() << "Entry: Cleared selection";
-        // Shouldn't get to this point
-    } else {
-        qDebug() << "Entry: Selection changed";
-        // TODO: Update editor with content from selected entry.
+    Q_UNUSED(selection);
+
+    qDebug() << "Entry: Selection changed";
+
+    const int sel_count = ui->lstJournals->selectionModel()->selectedRows().count();
+
+    if(sel_count == 0)
+    {
+        // TODO: show no entries selected/default screen
+    }
+    else if(sel_count == 1)
+    {
         // TODO: If multiple entries are selected, show a blurb from each one.
+        ui->txtEntry->setText( ui->lstEntries->model()->data(
+                    ui->lstEntries->model()->index(
+                        selection.indexes().first().row(), 1), Qt::EditRole).toString() );
+    }
+    else
+    {
+        // TODO: Multiple selections
+        qDebug() << "Multiple selections: Feature coming soon." << sel_count;
     }
 }

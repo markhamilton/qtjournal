@@ -37,5 +37,11 @@ QVariant EntryModel::data(const QModelIndex &index, int role) const
         q.exec("select id,trim(replace(content, ltrim(content, replace(content, '\n', '' ) ), '')),published from entry limit " + QString::number(row) + ",1");
         if(q.next()) return QString(q.value(col).toString());
     }
+    else if (role == Qt::EditRole)
+    {
+        QSqlQuery q;
+        q.exec("select id,content,published from entry limit " + QString::number(row) + ",1");
+        if(q.next()) return QString(q.value(col).toString());
+    }
     return QVariant();
 }
