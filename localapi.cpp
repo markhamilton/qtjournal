@@ -68,7 +68,7 @@ bool LocalApi::demoData()
     }
 
     for(int i = 1; i < 1000; ++i) {
-        query.exec("insert into entry (id, journal_id,content) VALUES (" + QString::number(i) + ", 1, \"Test Entry " + QString::number(i) + "\n\nTest content\")");
+        query.exec("insert into entry (id, journal_id, content, published) VALUES (" + QString::number(i) + ", 1, \"Test Entry " + QString::number(i) + "\n\nTest content\", \"now\")");
     }
 
     return true;
