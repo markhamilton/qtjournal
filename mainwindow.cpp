@@ -67,7 +67,8 @@ void MainWindow::entrySelectionChanged(const QItemSelection& selection)
 
     qDebug() << "Entry: Selection changed";
 
-    const int sel_count = ui->lstJournals->selectionModel()->selectedRows().count();
+    int sel_count = ui->lstEntries->selectionModel()->selectedRows().count();
+    qDebug() << sel_count;
 
     if(sel_count == 0)
     {
@@ -75,14 +76,12 @@ void MainWindow::entrySelectionChanged(const QItemSelection& selection)
     }
     else if(sel_count == 1)
     {
-        // TODO: If multiple entries are selected, show a blurb from each one.
-        ui->txtEntry->setText( ui->lstEntries->model()->data(
-                    ui->lstEntries->model()->index(
-                        selection.indexes().first().row(), 1), Qt::EditRole).toString() );
+        ui->txtEntry->setText(
+                    ui->lstEntries->selectionModel()->selectedRows(1).first().data(Qt::EditRole).toString() );
     }
     else
     {
-        // TODO: Multiple selections
+        // TODO: If multiple entries are selected, show a blurb from each one.
         qDebug() << "Multiple selections: Feature coming soon." << sel_count;
     }
 }
