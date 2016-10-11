@@ -25,4 +25,3 @@ HEADERS  += localapi.h \
 RESOURCES += README.md \
            LICENSE.md
 
-FORMS    += mainwindow.ui
