@@ -1,10 +1,14 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MAIN_H
+#define MAIN_H
 
 #include "localapi.h"
 
 #include <QMainWindow>
 #include <QItemSelection>
+
+#include <QHBoxLayout>
+#include <QListView>
+#include <QTextEdit>
 
 namespace Ui {
 class MainWindow;
@@ -24,11 +28,18 @@ private:
 public slots:
     void journalSelectionChanged(const QItemSelection& selection);
     void entrySelectionChanged(const QItemSelection& selection);
+//    void entryTextChanged(const )
 
 private:
-    Ui::MainWindow *ui;
+
+    // qt controls
+    QHBoxLayout *qhbThreePanel;
+    QListView *lstJournals;
+    QListView *lstEntries;
+    QTextEdit *txtEntry;
+
 
     LocalApi l_api;
 };
 
-#endif // MAINWINDOW_H
+#endif // MAIN_H

@@ -13,15 +13,14 @@ TEMPLATE = app
 CONFIG   -= x86_64
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     localapi.cpp \
     journalmodel.cpp \
     entrymodel.cpp
 
-HEADERS  += mainwindow.h \
-    localapi.h \
+HEADERS  += localapi.h \
     journalmodel.h \
-    entrymodel.h
+    entrymodel.h \
+    main.h
 
 RESOURCES += README.md \
            LICENSE.md
